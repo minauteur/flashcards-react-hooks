@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Flashcard MVP",
+  "name": "Flashcard MVP (React Hooks)",
   "icons": [
     {
       "src": "favicon.ico",
