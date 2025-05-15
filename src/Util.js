@@ -16,14 +16,28 @@ export const getStringProps = (jsonObj) => {
       console.log("card.front = " + JSON.stringify(card.front));
 
     }
-    if ( jsonObj.hasOwnProperty("back") && typeof jsonObj.back === "string" &&
-        jsonObj.back.trim() !== card.front ) {
+    if (jsonObj.hasOwnProperty("back") && typeof jsonObj.back === "string" &&
+        jsonObj.back.trim() !== card.front) {
       card.back = jsonObj.back.trim()
       console.log("card.back = " + JSON.stringify(card.back));
     }
     if (card.front !== "" && card.back !== "" && card.front !== card.back) {
       console.log("got card value: "+ JSON.stringify(card))
       return card
+    }
+    // if the "front" and "back" properties are not explicitly stated, first we'll check the properties--
+	  // if there's only one and it's a string value, we'll accept it as a card in the form of {"front": "key", "back": "value"}
+	  console.log("no explicit \"front\" or \"back\" properties found--checking single property value fallback: " + JSON.stringify(jsonObj));
+	  if (Object.keys(jsonObj).length === 1 && typeof jsonObj[Object.keys(jsonObj)[0]] === "string" && typeof Object.keys(jsonObj)[0] === "string") {
+		  let question = Object.keys(jsonObj)[0];
+		  let answer = jsonObj[Object.keys(jsonObj)[0]];
+		  if (question.trim() !== "" && answer.trim() !== "" && question.trim() !== answer.trim()) {
+			  card.front = question.trim();
+			  card.back = answer.trim();
+			  return card;
+		  }
+	  } else {
+      console.log("object had multiple properties--checking for string values");
     }
     for (let key in jsonObj) {
       if (jsonObj.hasOwnProperty(key)) {
@@ -58,7 +72,7 @@ export const getStringPropsFromArr = (arr) => {
   for (let i in arr) {
     let jsonObj = arr[i];
     if (jsonObj !== null && typeof jsonObj === "object") {
-      const card = Object.keys(jsonObj).length >= 2 ? getStringProps(jsonObj) : false;
+      const card = Object.keys(jsonObj).length >= 1 ? getStringProps(jsonObj) : false;
       if (card && card.front !== "" && card.back !== "") {
         deck.push(card)
       }

@@ -60,13 +60,13 @@ function App() {
 
   useEffect(() => {
     const snapshot = Array.from(deck);
-    if (snapshot !== []) {
+    if (snapshot.length > 0) {
       setGlobalIdCounter(snapshot.length)
     } else if (filtered) {
 
       const count = activeCards.length + filteredCards.length;
       setGlobalIdCounter(count);
-    } else if (!filtered && snapshot === []) {
+    } else if (!filtered && snapshot.length === 0) {
       setGlobalIdCounter(0)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -77,10 +77,10 @@ function App() {
         var editedDeck = [];
         if (deck.length > 0) {
           editedDeck = Array.from(deck);
-          editedDeck.map(item => { 
+          editedDeck.map(item => {
             if (item.id === options.data.id) {
-               return Object.assign(item, options.data) 
-            } else return item 
+               return Object.assign(item, options.data)
+            } else return item
           })
         } else { editedDeck = [options.data] }
         setDeck(editedDeck);
@@ -121,7 +121,7 @@ function App() {
   }
   const sendNextId = (n) => {
     if (!n) {
-      if (deck !== [] && !filtered) {
+      if (deck.length === 0 && !filtered) {
         const len1 = deck.length;
         setGlobalIdCounter(len1);
       } else if (filtered) {
@@ -262,7 +262,7 @@ function App() {
         <div style={divStyle}>
 
           <button onClick={() => prevCard()} style={prevStyle}>Previous Card</button>
-          <button onClick={() => setFlipped(!flipped)} style={flipStyle}>{flipped ? "Flip to back" : "Flip to front"}</button>
+          <button onClick={() => setFlipped(!flipped)} style={flipStyle}>{flipped ? "Flip to front" : "Flip to back"}</button>
           <button onClick={() => nextCard()} style={nextStyle}>Next Card</button>
         </div>
         <div className="menu__container">

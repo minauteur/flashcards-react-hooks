@@ -27,7 +27,7 @@ function SaveLoad(props, { sendLoadCallback }) {
     }
     const handleResults = (results) => {
         if (results) {
-            if (results && !Array.isArray(results) && Object.keys(results).length >= 2) {
+            if (results && !Array.isArray(results) && Object.keys(results).length >= 1) {
                 const resObj = getStringProps(results);
                 if (resObj) {
                     setLoadInfo("Found a card! Click 'add' to load!")
@@ -123,7 +123,7 @@ function SaveLoad(props, { sendLoadCallback }) {
             const json = JSON.parse(jsonString);
             // Handle non-exception-throwing cases:
             // Neither JSON.parse(false) or JSON.parse(1234) throw errors, hence the type-checking,
-            // but... JSON.parse(null) returns null, and typeof null === "object", 
+            // but... JSON.parse(null) returns null, and typeof null === "object",
             // so we must check for that, too. Thankfully, null is falsey, so this suffices:
             if (json && typeof json === "object") {
                 return json;
@@ -228,7 +228,7 @@ function SaveLoad(props, { sendLoadCallback }) {
                     (action === "save") ?
                         "filename__input" : "display-none"
                 }
-                
+
                 onChange={handleFileNameInputChange}
                 autoComplete="off"
                 onFocus={() => props.sendInputStatus(true)}
